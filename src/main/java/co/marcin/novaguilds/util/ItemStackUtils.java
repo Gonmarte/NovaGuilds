@@ -1,31 +1,20 @@
-/*
- *     NovaGuilds - Bukkit plugin
- *     Copyright (C) 2015 Marcin (CTRL) Wieczorek
- *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *
- *     You should have received a copy of the GNU General Public License
- *     along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
+
 
 package co.marcin.novaguilds.util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.material.Dye;
+import org.bukkit.material.MaterialData;
+import org.bukkit.material.Wool;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionType;
 
@@ -299,4 +288,52 @@ public final class ItemStackUtils {
 
 		return itemList;
 	}
+
+	public boolean isSimilar(ItemStack item1, ItemStack item2) {
+
+		MaterialData data1 = item1.getData();
+		MaterialData data2 = item2.getData();
+		if (item1.getType() == Material.WOOL && item2.getType() == Material.WOOL) {
+			if (data1 instanceof Wool && data2 instanceof Wool) {
+				if (((Wool) data1).getColor() == ((Wool) data2).getColor()) {
+					if (item1.getAmount() == item2.getAmount()) {
+						if (item1.hasItemMeta() && item2.hasItemMeta()) {
+							if (item1.getItemMeta().hasDisplayName() && item2.getItemMeta().hasDisplayName()) {
+								if (item1.getItemMeta().getDisplayName().equals(item2.getItemMeta().getDisplayName())) {
+									if (item1.getDurability() == item2.getDurability()) {
+										return true;
+									}
+									return false;
+								}
+								return false;
+							}
+						}
+					}
+					return false;
+				}
+				return false;
+
+			}
+			return false;
+		}else {
+			if (item1.getType() == item2.getType()) {
+				if (item1.hasItemMeta() && item2.hasItemMeta()) {
+					if (item1.getItemMeta().hasDisplayName() && item2.getItemMeta().hasDisplayName()) {
+						if (item1.getItemMeta().getDisplayName().equals(item2.getItemMeta().getDisplayName())) {
+							if (item1.getAmount() == item2.getAmount()) {
+								if (item1.getDurability() == item2.getDurability()) {
+									return true;
+								}
+								return false;
+							}
+							return false;
+						}
+						return false;
+					}
+				}
+			}
+			return false;
+		}
+	}
+
 }

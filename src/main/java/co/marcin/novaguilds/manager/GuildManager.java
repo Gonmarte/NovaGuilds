@@ -428,6 +428,7 @@ public class GuildManager {
 	public void delete(NovaGuild guild) {
 		if(plugin.getConfigManager().getDataStorageType()== DataStorageType.FLAT) {
 			plugin.getFlatDataManager().delete(guild);
+
 		}
 		else {
 			if(!plugin.getDatabaseManager().isConnected()) {
@@ -442,6 +443,8 @@ public class GuildManager {
 				PreparedStatement preparedStatement = plugin.getDatabaseManager().getPreparedStatement(PreparedStatements.GUILDS_DELETE);
 				preparedStatement.setInt(1,guild.getId());
 				preparedStatement.executeUpdate();
+
+
 			}
 			catch(SQLException e) {
 				LoggerUtils.info("SQLException while deleting a guild.");
